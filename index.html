@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gelimo Gelados</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <div class="preloader" aria-label="Carregando Gelimo Gelados">
+    <div class="preloader-card">
+      <div class="preloader-ice" aria-hidden="true">
+        <span class="preloader-scoop"></span>
+        <span class="preloader-cone"></span>
+      </div>
+      <strong>Gelimo Gelados</strong>
+      <span>A preparar sabores...</span>
+      <div class="preloader-bar" aria-hidden="true">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <header class="navbar reveal" data-delay="0">
+    <nav class="nav-content" aria-label="Navega&ccedil;&atilde;o principal">
+      <a class="brand" href="index.html">Gelimo Gelados</a>
+      <a class="nav-link" href="#menu">Ver menu</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <section class="hero-copy" aria-labelledby="titulo-principal">
+      <span class="eyebrow reveal" data-delay="120">Geladaria artesanal</span>
+      <h1 class="reveal" data-delay="220" id="titulo-principal">Gelimo Gelados</h1>
+      <p class="lead reveal" data-delay="340">
+        Sabores frescos, cremosos e feitos para deixar qualquer dia mais doce.
+        Veja o menu atualizado com os produtos escolhidos pelo administrador.
+      </p>
+      <div class="actions reveal" data-delay="460">
+        <a class="btn-primary" href="#menu">Ver menu</a>
+        <a class="btn-secondary" href="#menu">Conhecer sabores</a>
+      </div>
+    </section>
+
+    <section class="hero-visual reveal reveal-right" data-delay="260" aria-label="Ilustra&ccedil;&atilde;o de gelado">
+      <div class="ice-cream" aria-hidden="true">
+        <div class="scoop one"></div>
+        <div class="scoop two"></div>
+        <div class="scoop three"></div>
+        <div class="cone"></div>
+      </div>
+      <div class="price-note">
+        <strong>Menu digital</strong>
+        <span>Sabores, imagens e precos sempre atualizados.</span>
+      </div>
+    </section>
+  </main>
+
+  <section class="menu-section reveal" data-delay="120" id="menu" aria-labelledby="menu-title">
+    <div class="menu-heading">
+      <span class="eyebrow">Menu digital</span>
+      <h2 id="menu-title">Sabores disponiveis</h2>
+      <p>Produtos cadastrados no painel administrativo aparecem aqui automaticamente.</p>
+    </div>
+
+    <div class="menu-status" id="menu-status" role="status">A carregar menu...</div>
+    <div class="category-strip" id="category-strip" aria-label="Categorias do menu"></div>
+    <div class="menu-grid" id="menu-grid" aria-live="polite"></div>
+  </section>
+
+  <button type="button" class="floating-cart" id="floating-cart" aria-label="Abrir carrinho">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6.2 6h15l-1.7 8.4a2 2 0 0 1-2 1.6H8.8a2 2 0 0 1-2-1.7L5.4 3.8H2.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="9.4" cy="20" r="1.4" fill="currentColor"/>
+      <circle cx="17.4" cy="20" r="1.4" fill="currentColor"/>
+    </svg>
+    <span id="cart-count">0</span>
+  </button>
+
+  <div class="modal-overlay" id="cart-modal" aria-hidden="true">
+    <section class="order-modal" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Carrinho</span>
+          <h2 id="cart-title">Produtos selecionados</h2>
+        </div>
+        <button type="button" class="modal-close" data-close-modal="cart-modal" aria-label="Fechar carrinho">&times;</button>
+      </div>
+      <div class="cart-list" id="cart-list"></div>
+      <div class="modal-total">
+        <span>Total</span>
+        <strong id="cart-total">0 Kz</strong>
+      </div>
+      <p class="modal-message" id="cart-message" role="status"></p>
+      <button type="button" class="checkout-button" id="checkout-button">Finalizar pedido</button>
+    </section>
+  </div>
+
+  <div class="modal-overlay" id="checkout-modal" aria-hidden="true">
+    <section class="order-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <div class="modal-header">
+        <div>
+          <span class="modal-kicker">Confirmar</span>
+          <h2 id="checkout-title">Enviar pedido</h2>
+        </div>
+        <button type="button" class="modal-close" data-close-modal="checkout-modal" aria-label="Fechar confirma&ccedil;&atilde;o">&times;</button>
+      </div>
+      <div class="order-summary" id="order-summary"></div>
+      <form class="checkout-form" id="checkout-form">
+        <div class="field">
+          <label for="customer-name">Nome</label>
+          <input type="text" id="customer-name" placeholder="Seu nome" required>
+        </div>
+        <div class="field">
+          <label for="table-number">Mesa</label>
+          <input type="number" id="table-number" min="1" max="16" placeholder="1 a 16" required>
+        </div>
+        <p class="modal-message" id="checkout-message" role="status"></p>
+        <div class="modal-actions">
+          <button type="button" class="back-button" id="back-to-cart">Voltar</button>
+          <button type="submit" class="send-button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.2 3.9A9.8 9.8 0 0 0 3.4 14.4L2 22l7.8-1.3A9.8 9.8 0 0 0 20.2 3.9Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M8.2 8.6c.2 3.2 3.1 6.1 6.3 6.5l1.7-1.7-2.4-1.3-.8.8c-1.1-.4-2.2-1.4-2.7-2.6l.8-.8-1.2-2.5-1.7 1.6Z" fill="currentColor"/>
+            </svg>
+            Enviar
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <footer class="site-footer reveal" data-delay="560">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <strong>Gelimo Gelados</strong>
+        <span>Menu digital da geladaria.</span>
+      </div>
+
+      <a href="#" target="_blank" rel="noopener noreferrer" class="btn-dcro" aria-label="Site do desenvolvedor">
+        <span class="icone-codigo" aria-hidden="true">&lt;/&gt;</span>
+        <span class="janela-conteudo">
+          <span class="texto-dcro">D'cr&oacute; Soft</span>
+          <span class="icone-seta" aria-hidden="true">&rarr;</span>
+        </span>
+      </a>
+    </div> 
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Gelimo Gelados. Todos os direitos reservados.</p>
+      <a href="loginAdm.html" class="admin-link" aria-label="Entrar no painel do administrador">&#9881;</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Admin | Gelimo Gelados</title>
+  <link rel="stylesheet" href="css/loginAdm.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/loginAdm.js" defer></script>
+</head>
+<body>
+  <main class="login-page">
+    <a class="back-link" href="index.html" aria-label="Voltar para a tela inicial">&larr; Voltar</a>
+
+    <section class="login-card" aria-labelledby="login-title">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span>
+      </div>
+
+      <span class="eyebrow">Painel do administrador</span>
+      <h1 id="login-title">Gelimo Gelados</h1>
+      <p class="login-text">Entre com o email e a senha do administrador.</p>
+
+      <form class="login-form" id="login-form">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" placeholder="admin@email.com" required>
+
+        <label for="password">Senha</label>
+        <div class="password-field">
+          <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Sua senha" required>
+          <button type="button" class="password-toggle" id="password-toggle" aria-label="Mostrar senha">Mostrar</button>
+        </div>
+
+        <button type="submit" class="login-button" id="login-button">Entrar</button>
+        <p class="form-message" id="form-message" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <div class="success-modal" id="success-modal" aria-hidden="true">
+    <div class="success-box" role="status" aria-live="polite">
+      <div class="success-icon" aria-hidden="true">&#10003;</div>
+      <strong>Login confirmado</strong>
+      <span>A abrir o painel administrativo...</span>
+    </div>
+  </div>
+</body>
+</html>

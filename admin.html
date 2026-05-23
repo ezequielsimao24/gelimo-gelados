@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Gelimo Gelados</title>
+  <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="js/supabaseClient.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+  <div class="admin-app">
+    <aside class="admin-sidebar" aria-label="Menu do painel">
+      <div class="brand-block">
+        <span class="eyebrow">Painel admin</span>
+        <h1>Gelimo</h1>
+      </div>
+
+      <nav class="admin-nav">
+        <button type="button" class="nav-item active" data-view-target="dashboard">Dashboard</button>
+        <button type="button" class="nav-item" data-view-target="add">Adicionar</button>
+        <button type="button" class="nav-item" data-view-target="edit">Editar</button>
+      </nav>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-header">
+        <div>
+          <span class="panel-kicker">Gelimo Gelados</span>
+          <h2 id="view-title">Dashboard</h2>
+          <p class="global-message" id="admin-global-message" role="status"></p>
+        </div>
+        <div class="header-actions">
+          <a href="index.html" class="ghost-link">Ver site</a>
+          <button type="button" class="logout-button" id="logout-button">Sair</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="view-panel active" id="dashboard-view" data-view="dashboard" aria-labelledby="dashboard-title">
+          <div class="panel compact-panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-kicker">Resumo</span>
+                <h3 id="dashboard-title">Dashboard</h3>
+              </div>
+              <button type="button" class="text-button" id="refresh-products">Atualizar</button>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <span>Produtos</span>
+                <strong id="total-products">0</strong>
+              </article>
+              <article class="stat-card">
+                <span>Disponiveis</span>
+                <strong id="available-products">0</strong>
+              </article>
+              <article class="stat-card">
+                <span>Categorias</span>
+                <strong id="total-categories">0</strong>
+              </article>
+            </div>
+
+            <div class="recent-block">
+              <div class="section-title">
+                <span class="panel-kicker">Recentes</span>
+                <h3>Ultimos produtos</h3>
+              </div>
+              <div class="mini-products-list" id="recent-products" aria-live="polite"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view-panel" id="add-view" data-view="add" aria-labelledby="produto-title">
+          <section class="panel product-form-panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-kicker">Cadastro</span>
+                <h3 id="produto-title">Produto</h3>
+              </div>
+              <button type="button" class="text-button" id="clear-product-form">Limpar</button>
+            </div>
+
+            <form class="product-form" id="product-form">
+              <input type="hidden" id="product-id">
+              <input type="hidden" id="current-image-url">
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="product-name">Nome</label>
+                  <input type="text" id="product-name" placeholder="Ex: Gelado de morango" required>
+                </div>
+
+                <div class="field">
+                  <label for="product-category">Categoria</label>
+                  <select id="product-category" required>
+                    <option value="">Selecione uma categoria</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="product-price">Preco</label>
+                  <input type="number" id="product-price" min="0" step="0.01" placeholder="0.00" required>
+                </div>
+
+                <div class="field span-2">
+                  <label for="product-description">Descricao</label>
+                  <textarea id="product-description" rows="4" placeholder="Detalhes do produto"></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="product-image">Imagem</label>
+                  <input type="file" id="product-image" accept="image/*">
+                  <span class="help-text">A imagem escolhida aparece ao lado antes de salvar.</span>
+                </div>
+
+                <div class="image-preview" id="image-preview" aria-live="polite">
+                  <span>Nenhuma imagem selecionada</span>
+                </div>
+              </div>
+
+              <label class="switch-row" for="product-available">
+                <input type="checkbox" id="product-available" checked>
+                <span>Produto disponivel no menu</span>
+              </label>
+
+              <button type="submit" class="primary-button" id="product-submit">Salvar produto</button>
+              <p class="form-message" id="admin-message" role="status"></p>
+            </form>
+          </section>
+        </section>
+
+        <section class="view-panel" id="edit-view" data-view="edit" aria-labelledby="produtos-title">
+          <section class="panel products-panel">
+            <div class="panel-header">
+              <div>
+                <span class="panel-kicker">Menu</span>
+                <h3 id="produtos-title">Produtos cadastrados</h3>
+              </div>
+            </div>
+
+            <div class="products-list" id="products-list" aria-live="polite"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
