@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
   <script src="js/supabaseClient.js" defer></script>
   <script src="js/admin.js" defer></script>
 </head>
+
 <body>
   <div class="admin-app">
     <aside class="admin-sidebar" aria-label="Menu do painel">
@@ -147,5 +149,20 @@
       </main>
     </div>
   </div>
+
+
+  <div class="containerApagar">
+    <dialog id="modal-apagar">
+      <div class="modal-content">
+        <h3>Apagar Produto</h3>
+        <p>Tem a certeza que quer eliminar: <br><strong id="nome-produto-delete"></strong>?</p>
+        <div class="modal-acoes">
+          <button id="btn-cancelar">Cancelar</button>
+          <button id="btn-confirmar">Apagar</button>
+        </div>
+      </div>
+    </dialog>
+  </div>
 </body>
+
 </html>

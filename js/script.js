@@ -144,8 +144,12 @@ function renderMenu() {
 }
 
 function renderProductCard(product) {
+  // Adicionamos style="width: 100%; height: 100%;" diretamente na imagem
   const image = product.imagem_url
-    ? `<img src="${escapeHTML(product.imagem_url)}" alt="${escapeHTML(product.nome)}" loading="lazy">`
+    ? `<img src="${escapeHTML(product.imagem_url)}" 
+            alt="${escapeHTML(product.nome)}" 
+            loading="lazy" 
+            style="width: 100%; height: 100%; object-fit: cover;">` 
     : "<span>Sem imagem</span>";
 
   return `

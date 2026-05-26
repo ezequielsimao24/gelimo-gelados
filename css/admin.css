@@ -761,6 +761,7 @@ textarea:focus {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -835,4 +836,95 @@ textarea:focus {
   .product-actions {
     grid-template-columns: 1fr;
   }
+}
+
+
+
+
+
+
+
+
+/* 1. Modal Container - Centralizado, Responsivo e com Animação */
+#modal-apagar {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    background: white;
+    /* A animação usa o translate para manter a posição central */
+    animation: zoomIn 0.3s ease-out;
+}
+
+/* 2. Fundo Escuro (Backdrop) */
+#modal-apagar::backdrop {
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.3s;
+}
+
+#modal-apagar[open]::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+/* 3. Conteúdo Interno */
+#modal-apagar .modal-content {
+    padding: 24px;
+    text-align: center;
+}
+
+#modal-apagar h3 { margin-top: 0; color: #333; font-size: 1.25rem; }
+#modal-apagar p { color: #666; margin: 16px 0; line-height: 1.5; }
+
+/* 4. Botões (Estilizados) */
+.modal-acoes {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.modal-acoes button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+#btn-cancelar {
+    background: #f0f0f0;
+    color: #333;
+}
+
+#btn-confirmar {
+    background: #e63946;
+    color: white;
+}
+
+#btn-confirmar:hover {
+    background: #d62839;
+}
+
+/* 5. Animações (Keyframes únicos) */
+@keyframes zoomIn {
+    from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+#modal-apagar.closing {
+    animation: zoomOut 0.2s ease-in forwards;
+}
+
+@keyframes zoomOut {
+    from { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    to { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
 }

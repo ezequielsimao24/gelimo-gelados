@@ -24,7 +24,26 @@ const clearProductFormButton = document.querySelector("#clear-product-form");
 const refreshProductsButton = document.querySelector("#refresh-products");
 const logoutButton = document.querySelector("#logout-button");
 
-const fallbackCategories = ["Copos", "Cascas", "Picoles", "Milk-shakes"];
+// ==================Categorias=====================================================
+const fallbackCategories = [
+  "Crepes & Waffles",
+  "Waffles de Chocolate",
+  "Crepes Salgados",
+  "Pettit Gateau & Brownes",
+  "Taça de Gelado",
+  "Milk Shake",
+  "Mono Porção",
+  "Granuzado de Sumo natural",
+  "Pastelaria",
+  "Sandes e Tostas",
+  "Baguetes",
+  "Take Away",
+  "Take Away Máquina",
+  "Cafetaria",
+  "Bebidas",
+  "Sumos",
+  "Diversos"
+];
 const maxImageSize = 5 * 1024 * 1024;
 const viewLabels = {
   dashboard: "Dashboard",
@@ -251,6 +270,9 @@ function renderProductItem(product, showActions) {
   `;
 }
 
+
+
+
 function clearImagePreview() {
   if (previewUrl) {
     URL.revokeObjectURL(previewUrl);
@@ -448,21 +470,6 @@ productsList.addEventListener("click", async (event) => {
     await loadProducts();
   }
 
-  if (deleteId) {
-    const canDelete = confirm("Apagar este produto?");
-
-    if (!canDelete) return;
-
-    const { error } = await window.gelimoSupabase.from("produtos").delete().eq("id", deleteId);
-
-    if (error) {
-      setMessage(getSupabaseErrorMessage(error, "apagar o produto"));
-      return;
-    }
-
-    setMessage("Produto apagado.", "success");
-    await loadProducts();
-  }
 });
 
 recentProducts.addEventListener("click", (event) => {
@@ -495,3 +502,79 @@ window.addEventListener("load", async () => {
   await loadCategories();
   await loadProducts();
 });
+
+ // =================evento apagar produto==============================
+
+// 1. Seleciona os elementos
+
+const modal = document.getElementById('modal-apagar');
+
+const btnConfirmar = document.getElementById('btn-confirmar');
+
+const btnCancelar = document.getElementById('btn-cancelar');
+
+
+
+
+
+// Gestor ÚNICO de delegação para o botão de apagar
+document.addEventListener('click', (e) => {
+  if (e.target.matches('[data-product-delete]')) {
+    const id = e.target.dataset.productDelete;
+    
+    // Procura o elemento pai .product-item para pegar o nome
+    const item = e.target.closest('.product-item');
+    const nome = item.querySelector('strong').textContent;
+
+    // Preenche o modal
+    document.getElementById('nome-produto-delete').textContent = nome;
+
+    // Define o que acontece no botão confirmar do modal
+    btnConfirmar.onclick = () => {
+      apagarProdutoNoSupabase(id);
+      modal.close();
+    };
+
+    modal.showModal();
+  }
+});
+
+// 3. Fechar modal
+
+btnCancelar.onclick = () => modal.close();
+
+
+async function apagarProdutoNoSupabase(id) {
+    const { error } = await window.gelimoSupabase.from("produtos").delete().eq("id", id);
+
+    if (error) {
+        setMessage(getSupabaseErrorMessage(error, "apagar o produto"));
+        return;
+    }
+
+    setMessage("Produto apagado com sucesso.", "success");
+    await loadProducts(); // Atualiza a lista
+}
+
+
+
+
+function fecharModalComAnimacao() {
+    const modal = document.getElementById('modal-apagar');
+    modal.classList.add('closing'); // Ativa a animação de zoomOut
+    
+    // Aguarda a duração da animação (200ms) para fechar realmente
+    setTimeout(() => {
+        modal.classList.remove('closing');
+        modal.close();
+    }, 200);
+}
+
+// Vincula o fecho aos botões
+btnCancelar.addEventListener('click', fecharModalComAnimacao);
+
+// Ajusta o confirmar também para usar a animação
+btnConfirmar.onclick = async () => {
+    await apagarProdutoNoSupabase(id); // (o teu ID precisa de estar acessível aqui)
+    fecharModalComAnimacao();
+};

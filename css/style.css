@@ -473,26 +473,27 @@ h1 {
   transform: translateY(-3px);
 }
 
+/* Container que mantém o tamanho à força */
 .menu-product-image {
-  height: 190px;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  background: var(--pink-soft);
-  color: var(--brown);
-  font-size: 0.88rem;
-  font-weight: 900;
+    width: 100% !important; /* Força ocupação total da coluna */
+    height: 190px !important; /* Altura fixa e imutável */
+    position: relative; /* Importante para o posicionamento da imagem */
+    overflow: hidden; /* Corta qualquer pixel que tente sair da caixa */
+    background-color: #f0f0f0; /* Cor de fundo caso a imagem demore */
 }
 
+/* Imagem que preenche tudo e ignora o tamanho original */
 .menu-product-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 360ms ease;
+    position: absolute; /* Tira do fluxo normal para centralizar */
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Garante o preenchimento sem distorção */
+    object-position: center !important; /* Centraliza a imagem */
 }
 
-.menu-product-card:hover .menu-product-image img {
+.menu-product-card:hover {
   transform: scale(1.04);
 }
 
