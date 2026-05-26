@@ -131,6 +131,11 @@ body.modal-open {
   animation: preloadSlide 1.1s ease-in-out infinite;
 }
 
+nav a{
+  display: flex;
+  align-items: center;
+}
+
 .navbar {
   position: fixed;
   top: 0;
